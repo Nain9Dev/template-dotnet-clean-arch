@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend-test:
+    name: Backend Tests (.NET 10 / Clean Architecture)
+    uses: Nain9Dev/.github/.github/workflows/reusable-dotnet.yml@main
+    with:
+      dotnet-version: "10.0.x"
+      solution-path: "backend/template-dotnet-clean-arch.slnx"
+      run-format-check: false
+
+  frontend-test:
+    name: Frontend Build (Vue 3 / TypeScript)
+    uses: Nain9Dev/.github/.github/workflows/reusable-web.yml@main
+    with:
+      node-version: "22.x"
+      install-command: "cd frontend && npm install"
+      test-command: "cd frontend && npx vue-tsc -b"
+      build-command: "cd frontend && npm run build"
+      run-build: true
