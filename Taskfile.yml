@@ -1,0 +1,36 @@
+version: '3'
+
+tasks:
+  dev:
+    desc: "Start .NET backend with hot reload"
+    dir: backend
+    cmds:
+      - dotnet watch --project src/Presentation/Template.Api run
+
+  test:
+    desc: "Execute all unit, integration, and Clean Architecture fitness tests"
+    dir: backend
+    cmds:
+      - dotnet test template-dotnet-clean-arch.slnx -c Release --verbosity normal
+
+  build:
+    desc: "Build release binaries"
+    dir: backend
+    cmds:
+      - dotnet build template-dotnet-clean-arch.slnx -c Release
+
+  lint:
+    desc: "Verify C# code formatting and style"
+    dir: backend
+    cmds:
+      - dotnet format --verify-no-changes
+
+  up:
+    desc: "Start multi-container production stack via docker compose"
+    cmds:
+      - docker compose up -d
+
+  down:
+    desc: "Stop multi-container stack"
+    cmds:
+      - docker compose down
