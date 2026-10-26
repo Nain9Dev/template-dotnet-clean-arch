@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#EDF1F6">
+  <title>template-dotnet-clean-arch · .NET 10 and Vue 3 starter</title>
+  <meta name="description" content="A full-stack starter template: .NET 10 Web API with Clean Architecture, EF Core 10 for writes, Dapper for reads, and a Vue 3 TypeScript client.">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="shell">
+    <a class="brand" href="#top">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 18 11 6M10 18l7-12M16 18l4-7"/></svg>
+      <span>template-dotnet-clean-arch</span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#architecture">Architecture</a>
+      <a href="#persistence">Persistence</a>
+      <a href="#quickstart">Quickstart</a>
+      <a href="#api">API</a>
+      <a class="keep" href="https://github.com/Nain9Dev/template-dotnet-clean-arch">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="shell">
+    <span class="eyebrow">Starter template · .NET 10 · Vue 3 · MIT</span>
+    <h1>A .NET and Vue starter with the layers already drawn.</h1>
+    <p class="lead">A working work-item tracker that shows where each kind of code goes: business rules in the domain, writes through EF Core, reads through Dapper, and a typed Vue client on top. Fork it and replace the example with your own domain.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/Nain9Dev/template-dotnet-clean-arch/generate">Use this template</a>
+      <a class="btn" href="#quickstart">Run it locally</a>
+    </div>
+    <ul class="chips" aria-label="Key facts">
+      <li>.NET 10 Web API</li>
+      <li>EF Core 10 + Dapper</li>
+      <li>Vue 3 + TypeScript</li>
+      <li>PostgreSQL 16 or SQLite</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="architecture" aria-labelledby="architecture-title">
+  <div class="shell">
+    <h2 id="architecture-title">Four layers, dependencies point inward</h2>
+    <p class="intro">Infrastructure implements the contracts that the domain and application layers own. Nothing in the domain knows about a database or a web framework.</p>
+    <svg class="diagram" viewBox="0 0 760 330" role="img" aria-labelledby="dn-title dn-desc">
+      <title id="dn-title">Clean Architecture layers of the .NET template</title>
+      <desc id="dn-desc">Presentation calls Application, which depends on Domain. Infrastructure sits to the side and implements the contracts owned by Application and Domain.</desc>
+      <defs>
+        <marker id="dn-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#0047AB"/></marker>
+      </defs>
+      <rect x="20" y="20" width="440" height="70" rx="4"/>
+      <text x="40" y="50">Presentation</text>
+      <text class="sub" x="40" y="72">Vue 3 SPA · ASP.NET Core controllers · ProblemDetails</text>
+
+      <rect x="20" y="125" width="440" height="70" rx="4"/>
+      <text x="40" y="155">Application</text>
+      <text class="sub" x="40" y="177">WorkItemService · DTOs · read contract</text>
+
+      <g class="core">
+        <rect x="20" y="230" width="440" height="70" rx="4"/>
+        <text x="40" y="260">Domain</text>
+        <text class="sub" x="40" y="282" style="fill:#d6e4fa">WorkItem aggregate · repository contract · domain errors</text>
+      </g>
+
+      <rect x="540" y="125" width="200" height="175" rx="4"/>
+      <text x="560" y="155">Infrastructure</text>
+      <text class="sub" x="560" y="188">EF Core 10 · writes</text>
+      <text class="sub" x="560" y="212">Dapper · reads</text>
+      <text class="sub" x="560" y="236">PostgreSQL / SQLite</text>
+
+      <path class="arrow" d="M240 90v33" marker-end="url(#dn-head)"/>
+      <path class="arrow" d="M240 195v33" marker-end="url(#dn-head)"/>
+      <path class="arrow dash" d="M538 160H462" marker-end="url(#dn-head)"/>
+      <path class="arrow dash" d="M538 265H462" marker-end="url(#dn-head)"/>
+      <text class="sub" x="467" y="150">implements</text>
+      <text class="sub" x="467" y="255">implements</text>
+    </svg>
+    <div class="grid layers">
+      <article class="card"><span class="tag">Domain</span><p>Pure business rules, with no dependency on frameworks, databases or third-party libraries.</p></article>
+      <article class="card"><span class="tag">Application</span><p>Depends only on the domain. Holds use cases, DTOs and the contracts it needs.</p></article>
+      <article class="card"><span class="tag">Infrastructure</span><p>Implements those contracts with EF Core and Dapper.</p></article>
+      <article class="card"><span class="tag">Presentation</span><p>ASP.NET Core controllers and the Vue 3 single-page application.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="persistence" aria-labelledby="persistence-title">
+  <div class="shell">
+    <h2 id="persistence-title">EF Core for writes, Dapper for reads</h2>
+    <p class="intro">Each tool does the job it is best at, behind separate contracts.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Operation</th><th scope="col">Tool</th><th scope="col">Why</th></tr></thead>
+        <tbody>
+          <tr><td>Domain mutations</td><td>EF Core 10</td><td>Change tracking, aggregate lifecycle and schema migrations, with transactional safety and no partial updates.</td></tr>
+          <tr><td>High-throughput queries</td><td>Dapper</td><td>No object-tracking overhead, explicit parameterised SQL and simple mapping for lists and dashboards.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="quickstart" aria-labelledby="quickstart-title">
+  <div class="shell">
+    <h2 id="quickstart-title">Run it in a minute</h2>
+    <p class="intro">Local development falls back to SQLite, so you need no database. Docker Compose runs the full stack on PostgreSQL 16.</p>
+    <div class="cols">
+      <div>
+        <h3 class="sub-title">Local, with SQLite</h3>
+<pre><code>cd backend
+dotnet run --project src/Presentation/Template.Api/Template.Api.csproj
+# API on http://localhost:5000
+
+cd frontend
+npm install
+npm run dev
+# client on http://localhost:5173</code></pre>
+      </div>
+      <div>
+        <h3 class="sub-title">Docker Compose, with PostgreSQL</h3>
+<pre><code>docker compose up --build
+# client   http://localhost:8080
+# API      http://localhost:5000
+# Postgres localhost:5432</code></pre>
+        <h3 class="sub-title">Verify</h3>
+<pre><code>dotnet test backend/template-dotnet-clean-arch.slnx
+cd frontend &amp;&amp; npm run build</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="api" aria-labelledby="api-title">
+  <div class="shell">
+    <h2 id="api-title">The example API</h2>
+    <p class="intro">Errors use RFC 7807 ProblemDetails. The OpenAPI document is served at <code>/openapi/v1.json</code>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Verb</th><th scope="col">Path</th><th scope="col">Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>GET</code></td><td><code>/api/v1/health</code></td><td>Service health check.</td></tr>
+          <tr><td><code>GET</code></td><td><code>/api/v1/work-items</code></td><td>List items, optionally filtered by <code>?status=</code>, read through Dapper.</td></tr>
+          <tr><td><code>GET</code></td><td><code>/api/v1/work-items/{id}</code></td><td>Get one item.</td></tr>
+          <tr><td><code>POST</code></td><td><code>/api/v1/work-items</code></td><td>Create an item through EF Core.</td></tr>
+          <tr><td><code>PUT</code></td><td><code>/api/v1/work-items/{id}</code></td><td>Update title, description and priority.</td></tr>
+          <tr><td><code>PATCH</code></td><td><code>/api/v1/work-items/{id}/status</code></td><td>Move an item to another status.</td></tr>
+          <tr><td><code>DELETE</code></td><td><code>/api/v1/work-items/{id}</code></td><td>Delete an item.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Every pull request runs the backend tests and the frontend build through the shared reusable workflows in the NainDev organisation.</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <span>By Aitor Nain Mendoza Vallejo · MIT licence · free for personal and commercial projects.</span>
+    <span><a href="https://github.com/Nain9Dev/template-dotnet-clean-arch">GitHub</a> · <a href="https://handbook.naindev.com">Engineering Handbook</a> · <a href="https://www.naindev.com">naindev.com</a></span>
+  </div>
+</footer>
+</body>
+</html>
