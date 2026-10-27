@@ -1,5 +1,7 @@
 # Full Stack Clean Architecture Starter (.NET 10 + Vue 3)
 
+[![Language: English](https://img.shields.io/badge/Language-English-blue.svg)](#)
+[![Versión en Español](https://img.shields.io/badge/Versión-Español-red.svg)](README.es.md)
 [![CI](https://github.com/Nain9Dev/template-dotnet-clean-arch/actions/workflows/ci.yml/badge.svg)](https://github.com/Nain9Dev/template-dotnet-clean-arch/actions/workflows/ci.yml)
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Vue](https://img.shields.io/badge/Vue-3.5-4FC08D?logo=vuedotjs)](https://vuejs.org/)
