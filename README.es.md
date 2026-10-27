@@ -1,3 +1,9 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="docs/assets/banner-light.svg">
+  <img alt="Plano arquitectónico de Template .NET Clean Arch" src="docs/assets/banner-dark.svg" width="100%">
+</picture>
+
 # Plantilla de inicio Full Stack con Clean Architecture (.NET 10 + Vue 3)
 
 [![Language: English](https://img.shields.io/badge/Language-English-blue.svg)](README.md)
