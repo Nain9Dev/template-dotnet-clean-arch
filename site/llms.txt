@@ -1,0 +1,7 @@
+# template-dotnet-clean-arch
+
+> A full-stack starter template: .NET 10 Web API with Clean Architecture, EF Core 10 for writes, Dapper for reads, and a Vue 3 TypeScript client.
+
+- Page: https://template-dotnet.naindev.com/
+- Source code: https://github.com/Nain9Dev/template-dotnet-clean-arch
+- Author: https://www.naindev.com/
